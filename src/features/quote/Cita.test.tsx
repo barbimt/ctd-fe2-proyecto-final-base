@@ -21,13 +21,13 @@ describe("Cita component", () => {
     userEvent.click(button);
     expect(await screen.findByText("Milhouse Van Houten")).toBeInTheDocument();
   });
-  it("Should render Milhouse quote", async () => {
+  it("Should render Homer quote", async () => {
     render(<Cita />);
     const input = screen.getByPlaceholderText("Ingresa el nombre del autor");
-    await userEvent.type(input, "Milhouse");
+    await userEvent.type(input, "Homer Simpson");
     const button = screen.getByText("Obtener Cita");
     await userEvent.click(button);
-    expect(await screen.findByText("Milhouse Van Houten")).toBeInTheDocument();
+    expect(await screen.findByText("Homer Simpson")).toBeInTheDocument();
   });
   it("Should remove the qoute", async () => {
     render(<Cita />);
@@ -40,4 +40,12 @@ describe("Cita component", () => {
       await screen.findByText("No se encontro ninguna cita")
     ).toBeInTheDocument();
   });
+  it("Should render an error message", async()=> {
+    render(<Cita />);
+    const input = screen.getByPlaceholderText("Ingresa el nombre del autor");
+    await userEvent.type(input, "2");
+    const button = screen.getByText("Obtener Cita");
+    await userEvent.click(button);
+    expect(await screen.findByText("Por favor ingrese un nombre válido")).toBeInTheDocument();
+  })
 });
